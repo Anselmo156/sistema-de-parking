@@ -12,6 +12,7 @@ $espacio = $_GET['espacio'];
 $fecha_ingreso = $_GET['fecha_ingreso'];
 $hora_ingreso = $_GET['hora_ingreso'];
 $user_sesion = $_GET['user_session'];
+$estado_ticket = "OCUPADO";
 
 date_default_timezone_set("Europe/Madrid");
 $fechaHora = date("Y-m-d H:i:s");
