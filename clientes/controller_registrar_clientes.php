@@ -49,20 +49,3 @@ if($contador_cliente == "0"){
     </div>
     <?php
 }
-
-// $sentencia = $pdo->prepare('INSERT INTO tb_clientes
-// (placa_auto, nombre_cliente, nit_ci_cliente, fyh_creacion, estado)
-// VALUES (:placa_auto, :nombre_cliente, :nit_ci_cliente, :fyh_creacion, :estado)');
-
-// $sentencia->bindParam(':placa_auto', $placa_auto);
-// $sentencia->bindParam(':nombre_cliente', $nombre_cliente);
-// $sentencia->bindParam(':nit_ci_cliente', $nit_ci_cliente);
-// $sentencia->bindParam('fyh_creacion', $fechaHora);
-// $sentencia->bindParam('estado', $estado_del_registro);
-
-// if($sentencia->execute()){
-//     echo 'success';
-//     //header('Location:' .$URL.'/');
-// }else{
-//      echo "Error al registrar a la base de datos";
-// }
