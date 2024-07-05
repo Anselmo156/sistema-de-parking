@@ -60,7 +60,7 @@ include('layout/admin/datos_usuario_sesion.php');
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group row">
-                                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Matrícula:</label>
+                                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Matrícula: <span><b style="color: red">*</b></span></label>
                                                                             <div class="col-sm-6">
                                                                                 <input type="text" style="text-transform: uppercase" class="form-control" id="placa_buscar<?php echo $id_map;?>">
                                                                             </div>
@@ -74,13 +74,13 @@ include('layout/admin/datos_usuario_sesion.php');
                                                                                 <script>
                                                                                     $('#btn_buscar_cliente<?php echo $id_map;?>').click(function () {
                                                                                         var placa = $('#placa_buscar<?php echo $id_map;?>').val();
-
+                                                                                        var id_map = "<?php echo $id_map;?>";
                                                                                         if(placa == ""){
                                                                                             alert('Debe de llenar el campo matrícula');
                                                                                             $('#placa_buscar<?php echo $id_map;?>').focus();
                                                                                         }else{
                                                                                             var url = 'clientes/controller_buscar_cliente.php';
-                                                                                            $.get(url, {placa:placa}, function(datos) {
+                                                                                            $.get(url, {placa:placa, id_map:id_map}, function(datos) {
                                                                                                 $('#respuesta_buscar_cliente<?php echo $id_map;?>').html(datos);
                                                                                             });
                                                                                         }
@@ -136,9 +136,28 @@ include('layout/admin/datos_usuario_sesion.php');
                                                                                 var fecha_ingreso = $('#fecha_ingreso<?php echo $id_map;?>').val();
                                                                                 var hora_ingreso = $('#hora_ingreso<?php echo $id_map;?>').val();
                                                                                 var espacio = $('#espacio<?php echo $id_map;?>').val();
-                                                                                
+                                                                                var user_session = "<?php echo $usuario_sesion; ?>";
+
+                                                                                if(placa == ""){
+                                                                                    alert('Debe de llenar el campo Matrícula');
+                                                                                    $('#placa_buscar<?php echo $id_map;?>').focus();
+                                                                                }else if(nombre_cliente == ""){
+                                                                                    alert('Debe de llenar el campo Nombre del Cliente');
+                                                                                    $('#nombre_cliente<?php echo $id_map;?>').focus();
+                                                                                }else if(nit_ci == ""){
+                                                                                    alert('Debe de llenar el campo Dni/Cif');
+                                                                                    $('#nit_ci<?php echo $id_map;?>').focus();
+                                                                                }else{
+                                                                                    var url = 'tickets/controller_registrar_ticket.php';
+                                                                                    $.get(url, {placa:placa, nombre_cliente:nombre_cliente, nit_ci:nit_ci, fecha_ingreso:fecha_ingreso, hora_ingreso:hora_ingreso, espacio:espacio, user_session:user_session}, function(datos) {
+                                                                                        $('#respuesta_ticket').html(datos);
+                                                                                    });
+                                                                                }
                                                                             });
                                                                         </script>
+                                                                    </div>
+                                                                    <div id="respuesta_ticket">
+
                                                                     </div>
                                                                 </div>
                                                             </div>

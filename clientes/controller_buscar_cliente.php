@@ -4,6 +4,7 @@ include('../app/config.php');
 
 $placa = $_GET['placa'];
 $placa = strtoupper($placa);// CONVIERTE TODO A MAYÚCULAS
+$id_map = $_GET['id_map'];
 
 // echo "Buscando la matrícula ".$placa;
 
@@ -26,14 +27,14 @@ if($nombre_cliente == ""){
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-3 col-form-label">Nombre: <span><b style="color: red">*</b></span></label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="nombre_cliente<?php echo $id_map;?>">
+            <input type="text" style="text-transform: uppercase" class="form-control" id="nombre_cliente<?php echo $id_map;?>">
         </div>
     </div>
 
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-3 col-form-label">DNI/CIF: <span><b style="color: red">*</b></span></label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="nit_ci<?php echo $id_map;?>">
+            <input type="text" style="text-transform: uppercase" class="form-control" id="nit_ci<?php echo $id_map;?>">
         </div>
     </div>
 <?php
@@ -43,12 +44,12 @@ if($nombre_cliente == ""){
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-3 col-form-label">Nombre: <span><b style="color: red">*</b></span></label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="nombre_cliente<?php echo $id_map;?>" value="<?php echo $nombre_cliente; ?>">
+            <input type="text" style="text-transform: uppercase" class="form-control" id="nombre_cliente<?php echo $id_map;?>" value="<?php echo $nombre_cliente; ?>">
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="staticEmail" class="col-sm-3 col-form-label">DNI/CIF: <span><b style="color: red">*</b></span></label>
+        <label for="staticEmail" style="text-transform: uppercase" class="col-sm-3 col-form-label">DNI/CIF: <span><b style="color: red">*</b></span></label>
         <div class="col-sm-9">
             <input type="text" class="form-control" id="nit_ci<?php echo $id_map;?>" value="<?php echo $nit_ci_cliente; ?>" >
         </div>
