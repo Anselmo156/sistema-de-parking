@@ -209,6 +209,8 @@
                     </ul>
                 </li>
 
+                
+
                 <li class="nav-item">
                     <a href="<?php echo $URL; ?>/login/cerrar_sesion.php"" class="nav-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
