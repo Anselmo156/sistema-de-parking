@@ -3,7 +3,7 @@
 require_once('../app/templates/TCPDF-main/tcpdf.php');
 include('../app/config.php');
 
-// Cargar el encabezado
+// CARGAR EL ENCABEZADO
 $query_informacions = $pdo->prepare("SELECT * FROM tb_informaciones WHERE estado = '1'");
 $query_informacions->execute();
 $informacions = $query_informacions->fetchAll(PDO::FETCH_ASSOC);
@@ -17,6 +17,43 @@ foreach($informacions as $informacion){
     $telefono = $informacion['telefono'];
     $departamento_ciudad = $informacion['departamento_ciudad'];
     $pais = $informacion['pais'];
+}
+
+// RESCATAR LA INFORMACIÓN DE LA FACTURA
+$query_fascturas = $pdo->prepare("SELECT * FROM tb_facturaciones WHERE estado = '1'");
+$query_fascturas->execute();
+$facturas = $query_fascturas->fetchAll(PDO::FETCH_ASSOC);
+foreach($facturas as $factura){
+    $id_facturacion = $factura['id_facturacion'];
+    $id_informacion = $factura['id_informacion'];
+    $nro_factura = $factura['nro_factura'];
+    $id_cliente = $factura['id_cliente'];
+    $fecha_factura = $factura['fecha_factura'];
+    $fecha_ingreso = $factura['fecha_ingreso'];
+    $hora_ingreso = $factura['hora_ingreso'];
+    $fecha_salida = $factura['fecha_salida'];
+    $hora_salida = $factura['hora_salida'];
+    $tiempo = $factura['tiempo'];
+    $espacio = $factura['espacio'];
+    $detalle = $factura['detalle'];
+    $precio = $factura['precio'];
+    $cantidad = $factura['cantidad'];
+    $total = $factura['total'];
+    $monto_total = $factura['monto_total'];
+    $monto_literal = $factura['monto_literal'];
+    $user_sesion = $factura['user_sesion'];
+    $qr = $factura['qr'];
+}
+
+//  RESCATANDO LOS DATOS DEL CLIENTE
+$query_clientes = $pdo->prepare("SELECT * FROM tb_clientes WHERE id_cliente = '$id_cliente' AND estado = '1'  ");
+$query_clientes->execute();
+$datos_clientes = $query_clientes->fetchAll(PDO::FETCH_ASSOC);
+foreach($datos_clientes as $datos_cliente){
+    $id_cliente = $datos_cliente['id_cliente'];
+    $nombre_cliente = $datos_cliente['nombre_cliente'];
+    $nit_ci_cliente = $datos_cliente['nit_ci_cliente'];
+    $placa_auto = $datos_cliente['placa_auto'];
 }
 
 // create new PDF document
@@ -71,17 +108,17 @@ $html = '
         TELÉFONO: '.$telefono.' <br>
         '.$departamento_ciudad.' - '.$pais.' <br>
         --------------------------------------------------------------------------------
-        <b>FACTURA Nro.</b> 00001
+        <b>FACTURA Nro.</b> '.$nro_factura.'
         --------------------------------------------------------------------------------
         <div style="text-align: left">
             <b>DATOS DEL CLIENTE</b> <br>
-            <b>SEÑOR(A): </b> ANSELMO EGURROLA PINEDO <br>
-            <b>DNI/CIF.: </b> 15351877K <br>
-            <b>Fecha de la factura: </b> Eibar, 6 de Julio de 2024  <br>
+            <b>SEÑOR(A): </b> '.$nombre_cliente.' <br>
+            <b>DNI/CIF.: </b> '.$nit_ci_cliente.' <br>
+            <b>Fecha de la factura: </b> '.$fecha_factura.'  <br>
             -------------------------------------------------------------------------------- <br>
-            <b>De: </b> 06/07/2024 <b>Hora: </b>09:00<br>
-            <b>A: </b> 06/07/2024  <b>Hora: </b>11:00<br>
-            <b>Tiempo:  </b> 2 horas en el espacio 10<br>
+            <b>De: </b> '.$fecha_ingreso.'<b> Hora: </b>'.$hora_ingreso.'<br>
+            <b>A: </b> '.$fecha_salida.'  <b>Hora: </b>'.$hora_salida.'<br>
+            <b>Tiempo:  </b> '.$tiempo.'<br>
             -------------------------------------------------------------------------------- <br>
             <table border="1" cellpadding="3">
                 <tr>
@@ -91,23 +128,23 @@ $html = '
                     <td style="text-align: center" width="45px"><b>Total</b></td>
                 </tr>
                 <tr>
-                    <td>Servicio de parking de 2 horas</td>
-                    <td style="text-align: center">€. 1</td>
-                    <td style="text-align: center">1</td>
-                    <td style="text-align: center">€. 2</td>
+                    <td>'.$detalle.'</td>
+                    <td style="text-align: center">€. '.$precio.'</td>
+                    <td style="text-align: center">'.$cantidad.'</td>
+                    <td style="text-align: center">€. '.$total.'</td>
                 </tr>
             </table>
             <p style="text-align: right">
-                <b>Total Factura: </b> €. 2
+                <b>Total Factura: </b> €. '.$monto_total.'
             </p>
             <p>
-                <b>Son: </b>Dos 00/002 €.
+                <b>Son: </b>'.$monto_literal.'
             </p>
             <br>
             -------------------------------------------------------------------------------- <br>
-            <b>USUARIO:</b> ANSELMO EGURROLA PINEDO <br><br><br><br><br><br><br><br><br>
+            <b>USUARIO:</b> '.$user_sesion.' <br><br><br><br><br><br><br><br>
+
             <p style="text-align: center">
-                
             </p>
             <p style="text-align: center">"ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ESTA SERÁ SANCIONADO DE ACUERDO A LA LEY"
             </p>
@@ -130,12 +167,10 @@ $style = array(
     'module_height' => 1 // height of a single module in points
 );
 
-$QR = 'Factura realizada por el sistema de parking ANSELMO WEB, al cliente Gaiska Mendikute con nit: 25411221W 
-con el vehículo con número de placa 8957 GTH y esta factura se genero el 8 de Julio de 2024 a hr: 14:00';
-$pdf->write2DBarcode($QR, 'QRCODE,L', 22, 105, 35, 35, $style);
+$pdf->write2DBarcode($qr,'QRCODE,L', 22, 109, 30, 30, $style);
 
 //Close and output PDF document
-$pdf->Output('example_002.pdf', 'I');
+$pdf->Output('factura.pdf', 'I');
 
 //============================================================+
 // END OF FILE
