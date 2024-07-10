@@ -59,7 +59,7 @@ if($nombre_cliente == ""){
 
 // BUSCA LA PLACA EN LA TABLA TICKETS
 $contador_ticket = 0;
-$query_tickets = $pdo->prepare("SELECT * FROM tb_tickets WHERE placa_auto = '$placa' AND estado_ticket = 'OCUPADO' AND estado = '1'  ");
+$query_tickets = $pdo->prepare("SELECT * FROM tb_tickets WHERE placa_auto = '$placa' AND estado_ticket = 'OCUPADO' AND estado = '1'");
 $query_tickets->execute();
 $datos_tickets = $query_tickets->fetchAll(PDO::FETCH_ASSOC);
 foreach($datos_tickets as $datos_ticket){
