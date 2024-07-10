@@ -14,7 +14,6 @@ include('../layout/admin/datos_usuario_sesion.php');
         <br>
         <div class="container">
             <h2>Listado de Precios</h2>
-
             <br>
             <div class="row">
                 <div class="col-md-10">
@@ -28,43 +27,68 @@ include('../layout/admin/datos_usuario_sesion.php');
                                 </button>
                             </div>
                         </div>
-
+                        <script>
+                            $(document).ready(function() {
+                                $('#table_id').DataTable( {
+                                    "pageLength": 5,
+                                    "language": {
+                                        "emptyTable": "No hay información",
+                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Precios",
+                                        "infoEmpty": "Mostrando 0 a 0 de 0 Precios",
+                                        "infoFiltered": "(Filtrado de _MAX_ total Precios)",
+                                        "infoPostFix": "",
+                                        "thousands": ",",
+                                        "lengthMenu": "Mostrar _MENU_ Precios",
+                                        "loadingRecords": "Cargando...",
+                                        "processing": "Procesando...",
+                                        "search": "Buscador:",
+                                        "zeroRecords": "Sin resultados encontrados",
+                                        "paginate": {
+                                            "first": "Primero",
+                                            "last": "Ultimo",
+                                            "next": "Siguiente",
+                                            "previous": "Anterior"
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
                         <div class="card-body" style="display: block;">
                             <table id="table_id" class="table table-bordered table-sm table-striped">
                                 <thead>
-                                <th><center>Nro</center></th>
-                                <th>Cantidad</th>
-                                <th>Detalle</th>
-                                <th>Precio</th>
-                                <th><center>Acción</center></th>
+                                    <th><center>Nro</center></th>
+                                    <th>Cantidad</th>
+                                    <th>Detalle</th>
+                                    <th>Precio</th>
+                                    <th><center>Acción</center></th>
                                 </thead>
                                 <tbody>
-                                <?php
-                                $contador_precio = 0;
-                                $query_precios = $pdo->prepare("SELECT * FROM tb_precios WHERE estado = '1'");
-                                $query_precios->execute();
-                                $datos_precios = $query_precios->fetchAll(PDO::FETCH_ASSOC);
-                                foreach($datos_precios as $datos_precio){
-                                    $contador_precio = $contador_precio + 1;
-                                    $id_precio = $datos_precio['id_precio'];
-                                    $cantidad = $datos_precio['cantidad'];
-                                    $detalle = $datos_precio['detalle'];
-                                    $precio = $datos_precio['precio'];
-                                    ?>
-                                    <tr>
-                                        <td><center><?php echo $contador_precio;?></center></td>
-                                        <td><center><?php echo $cantidad;?></center></td>
-                                        <td><center><?php echo $detalle;?></center></td>
-                                        <td><center><?php echo $precio;?></center></td>
-                                        <td>
-                                            <center>
-                                                <a href="update.php?id=<?php echo $id_precio; ?>" class="btn btn-success">Editar</a>
-                                            </center>
-                                        </td>
-                                    </tr>
                                     <?php
-                                }
-                                ?>
+                                    $contador_precio = 0;
+                                    $query_precios = $pdo->prepare("SELECT * FROM tb_precios WHERE estado = '1'");
+                                    $query_precios->execute();
+                                    $datos_precios = $query_precios->fetchAll(PDO::FETCH_ASSOC);
+                                    foreach($datos_precios as $datos_precio){
+                                        $contador_precio = $contador_precio + 1;
+                                        $id_precio = $datos_precio['id_precio'];
+                                        $cantidad = $datos_precio['cantidad'];
+                                        $detalle = $datos_precio['detalle'];
+                                        $precio = $datos_precio['precio'];
+                                        ?>
+                                        <tr>
+                                            <td><center><?php echo $contador_precio;?></center></td>
+                                            <td><center><?php echo $cantidad;?></center></td>
+                                            <td><center><?php echo $detalle;?></center></td>
+                                            <td><center><?php echo $precio;?></center></td>
+                                            <td>
+                                                <center>
+                                                    <a href="update.php?id=<?php echo $id_precio; ?>" class="btn btn-success">Editar</a>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

@@ -15,6 +15,32 @@ include('../layout/admin/datos_usuario_sesion.php');
         <div class="container">
             <h2>Listado de Clientes</h2>
             <br>
+            <script>
+                $(document).ready(function() {
+                    $('#table_id').DataTable( {
+                        "pageLength": 5,
+                        "language": {
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Clientes",
+                            "infoEmpty": "Mostrando 0 a 0 de 0 Clientes",
+                            "infoFiltered": "(Filtrado de _MAX_ total Clientes)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Clientes",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscador:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
             <div class="row">
                 <div class="col-md-10">
                     <div class="card card-outline card-primary">
@@ -29,11 +55,11 @@ include('../layout/admin/datos_usuario_sesion.php');
                         <div class="card-body" style="display: block;">
                             <table id="table_id" class="table table-bordered table-sm table-striped">
                                 <thead>
-                                <th><center>Nro</center></th>
-                                <th>Nombre del Cliente</th>
-                                <th>Dni/Cif del Cliente</th>
-                                <th>Matrícula del Auto</th>
-                                <th><center>Acción</center></th>
+                                    <th><center>Nro</center></th>
+                                    <th>Nombre del Cliente</th>
+                                    <th>Dni/Cif del Cliente</th>
+                                    <th>Matrícula del Auto</th>
+                                    <th><center>Acción</center></th>
                                 </thead>
                                 <tbody>
                                     <?php
